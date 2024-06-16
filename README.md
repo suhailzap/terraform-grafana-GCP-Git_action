@@ -89,9 +89,7 @@ This workflow destroys the infrastructure created by the `Terraform and Deploy` 
 
 ---
 
-## 📧 Contact
 
-For any questions or issues, please contact **[suhailsap06@gmail.com](mailto:suhailsap06@gmail.com)**.
 
 ---
 
