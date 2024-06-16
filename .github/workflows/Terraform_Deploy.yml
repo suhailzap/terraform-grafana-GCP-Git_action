@@ -27,7 +27,7 @@ jobs:
       - name: Setup gcloud CLI
         uses: google-github-actions/setup-gcloud@v1
         with:
-          project_id: terraform-mltp  # Your GCP project ID
+          project_id: example  # Your GCP project ID
           service_account_email: xxx@gmail.com  # Your service account email
 
       - name: Terraform Init
@@ -63,7 +63,7 @@ jobs:
       - name: Setup gcloud CLI
         uses: google-github-actions/setup-gcloud@v1
         with:
-          project_id: terraform-mltp  # Your GCP project ID
+          project_id: example  # Your GCP project ID
           service_account_email: xxx@gmail.com  # Your service account email
 
       - name: Install Docker and Docker Compose on GCP Instance
