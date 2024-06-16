@@ -1,0 +1,73 @@
+name: Terraform Destroy
+
+on:
+  workflow_dispatch: # Manual trigger only
+
+jobs:
+  terraform-destroy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Terraform code
+        uses: actions/checkout@v2
+        with:
+          repository: suhailzap/terraform-grafana
+          path: terraform-grafana  # Root directory
+          ref: main
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.0
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Setup gcloud CLI
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: example  # Your GCP project ID
+          service_account_email: xxxxx@gmail.com  # Your service account email
+
+      - name: Terraform Init
+        working-directory: terraform-grafana  # Root directory
+        run: terraform init
+
+      - name: Terraform Destroy
+        working-directory: terraform-grafana  # Root directory
+        run: terraform destroy -auto-approve
+
+  cleanup-deploy:
+    runs-on: ubuntu-latest
+    needs: terraform-destroy
+    steps:
+      - name: Checkout Compose file
+        uses: actions/checkout@v2
+        with:
+          repository: suhailzap/terraform-grafana
+          path: terraform-grafana  # Root directory
+          ref: main
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Setup gcloud CLI
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: example  # Your GCP project ID
+          service_account_email: xxxx@gmail.com  # Your service account email
+
+      - name: Stop and Remove Docker Containers
+        run: |
+          INSTANCE_NAME="grafana-instance"
+          ZONE="me-central1-a"
+          gcloud compute ssh $INSTANCE_NAME --zone=$ZONE -- 'sudo docker-compose -f ~/intro-to-mltp-main/docker-compose.yml down'
+
+      - name: Delete GCP Instance
+        run: |
+          INSTANCE_NAME="grafana-instance"
+          ZONE="me-central1-a"
+          gcloud compute instances delete $INSTANCE_NAME --zone=$ZONE --quiet
