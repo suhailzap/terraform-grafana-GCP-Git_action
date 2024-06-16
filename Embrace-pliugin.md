@@ -11,7 +11,7 @@ Follow these steps to download and install the Embrace.io Metric Plugin for Graf
 First, download the plugin to a temporary directory where you have write permissions. Use the `docker exec` command to run these commands inside your Grafana container.
 
 ```bash
-docker exec -it intro-to-mltp-main-grafana-1 bash -c "curl -L -o /tmp/embraceio-metric-app-1.2.0.zip https://github.com/embrace-io/grafana-metric-plugin/releases/download/1.2.0/embraceio-metric-app-1.2.0.zip"
+docker exec -it grafana_container_name bash -c "curl -L -o /tmp/embraceio-metric-app-1.2.0.zip https://github.com/embrace-io/grafana-metric-plugin/releases/download/1.2.0/embraceio-metric-app-1.2.0.zip"
 ```
 
 ### Step 2: Move the Plugin to the Grafana Plugins Directory
@@ -19,7 +19,7 @@ docker exec -it intro-to-mltp-main-grafana-1 bash -c "curl -L -o /tmp/embraceio-
 Move the downloaded plugin file to the Grafana plugins directory:
 
 ```bash
-docker exec -it intro-to-mltp-main-grafana-1 bash -c "mv /tmp/embraceio-metric-app-1.2.0.zip /var/lib/grafana/plugins/"
+docker exec -it grafana_container_name bash -c "mv /tmp/embraceio-metric-app-1.2.0.zip /var/lib/grafana/plugins/"
 ```
 
 ### Step 3: Navigate to the Plugins Directory
@@ -27,7 +27,7 @@ docker exec -it intro-to-mltp-main-grafana-1 bash -c "mv /tmp/embraceio-metric-a
 Change to the Grafana plugins directory:
 
 ```bash
-docker exec -it intro-to-mltp-main-grafana-1 bash -c "cd /var/lib/grafana/plugins/"
+docker exec -it grafana_container_name bash -c "cd /var/lib/grafana/plugins/"
 ```
 
 ### Step 4: Unzip the Plugin
@@ -35,7 +35,7 @@ docker exec -it intro-to-mltp-main-grafana-1 bash -c "cd /var/lib/grafana/plugin
 Unzip the plugin file:
 
 ```bash
-docker exec -it intro-to-mltp-main-grafana-1 bash -c "unzip /var/lib/grafana/plugins/embraceio-metric-app-1.2.0.zip"
+docker exec -it grafana_container_name bash -c "unzip /var/lib/grafana/plugins/embraceio-metric-app-1.2.0.zip"
 ```
 
 ### Step 5: Restart Grafana
@@ -44,7 +44,7 @@ Finally, restart the Grafana container to load the new plugin:
 
 ```bash
 # Restart the Grafana container (run this on the host machine)
-sudo docker restart intro-to-mltp-main-grafana-1
+sudo docker restart grafana_container_name
 ```
 
 ---
